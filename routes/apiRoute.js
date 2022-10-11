@@ -1,6 +1,6 @@
 const fs = require("fs");
 const uuid = require("uuid");
-const db = require("../db/db.json")
+const db = require("../db/db.json");
 
 module.exports = function (app) {
     app.get("/api/notes", function (req, res) {
@@ -16,7 +16,8 @@ module.exports = function (app) {
             title: req.body.title,
             text: req.body.text,
             id: uuid.v4(),
-        }
+        };
+
         fs.readFile(__dirname + "/../db/db.json", (err, data) => {
             if (err) throw err;
             allNotes = JSON.parse(data);
@@ -24,8 +25,8 @@ module.exports = function (app) {
             fs.writeFile(__dirname + "/../db/db.json", JSON.stringify(allNotes), "utf-8", (err) => {
                 if (err) throw err;
                 res.end();
-            })
-        })
+            });
+        });
     });
 
     app.delete("/api/notes/:id", (req, res) => {
